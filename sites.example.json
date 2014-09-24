@@ -1,0 +1,7 @@
+{
+    "example.com": {
+        "gitRepo": "https://github.com/johnAppleseed/example.com",
+        "nginxConfigFile": "example.com.cfg",
+        "webroot": "htdocs"
+    }
+}
