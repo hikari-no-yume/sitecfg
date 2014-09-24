@@ -21,7 +21,7 @@ function setupSite($site, $siteName) {
     
     if (!file_exists("/var/www")) {
         mkdir("/var/www") or die("couldn't create /var/www\n");
-        chrgrp("/var/www", $config['group']) or die("failed to chown /var/www");
+        chgrp("/var/www", $config['group']) or die("failed to chown /var/www");
     }
     
     $wwwDir = "/var/www/$siteName";
