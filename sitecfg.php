@@ -18,10 +18,20 @@ function setupSite($site, $siteName) {
     $siteDir = "$config[sitesDir]/$siteName";
     run("git clone $site[gitRepo] '$siteDir'") or die("failed to clone git repo\n");
     run("chown -R $config[owner]:$config[group] '$siteDir'") or die("failed to change owner and group of directory\n");
-    run("ln -s '$siteDir/$site[webRoot]' '/var/www/$siteName'") or die ("failed to symlink webroot into /var/www");
+    
+    if (!file_exists("/var/www")) {
+        mkdir("/var/www") or die("couldn't create /var/www\n");
+        chrgrp("/var/www", $config['group']) or die("failed to chown /var/www");
+    }
+    
+    $wwwDir = "/var/www/$siteName";
+run("ln -s '$siteDir/$site[webRoot]' '$wwwDir'") or die ("failed to symlink webroot into /var/www");
+    
     run("ln -s '$siteDir/$site[nginxConfigFile]' '/etc/nginx/sites-available/$siteName'") or die("failed to simlink site config file into nginx sites-available\n");
     run("ln -s '/etc/nginx/sites-available/$siteName' '/etc/nginx/sites-enabled/$siteName'") or die("failed to simlink nginx sites-available to nginx sites-enabled\n");
     run("service nginx reload") or die("failed to reload nginx\n");
+    
+    echo "Everything seems fine, site \"$siteName\" setup.\n";
 }
 
 function printUsage() {
