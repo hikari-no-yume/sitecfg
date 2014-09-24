@@ -37,6 +37,10 @@ if ($argc < 2) {
     die();
 }
 
+if (0 !== posix_getuid()) {
+    die("this utility must be run as root (use sudo) to work\n");
+}
+
 $sites = file_get_contents("sites.json") or die("couldn't load sites.json\n");
 $sites = json_decode($sites, true) or die("couldn't decode json\n");
 
