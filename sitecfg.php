@@ -41,7 +41,7 @@ function setupSite($site, $siteName) {
     
     $configFile = ($site['type'] === 'git') ? "$siteDir/$site[nginxConfigFile]" : $site['nginxConfigFile'];
     
-    run("ln -s '$configFile]' '/etc/nginx/sites-available/$siteName'") or die("failed to simlink site config file into nginx sites-available\n");
+    run("ln -s '$configFile' '/etc/nginx/sites-available/$siteName'") or die("failed to simlink site config file into nginx sites-available\n");
     run("ln -s '/etc/nginx/sites-available/$siteName' '/etc/nginx/sites-enabled/$siteName'") or die("failed to simlink nginx sites-available to nginx sites-enabled\n");
     run("service nginx reload") or die("failed to reload nginx\n");
     
