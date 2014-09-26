@@ -1,7 +1,13 @@
 {
     "example.com": {
+        "type": "git",
         "gitRepo": "https://github.com/johnAppleseed/example.com",
         "nginxConfigFile": "example.com.cfg",
         "webroot": "htdocs"
+    },
+    "myuser.example.com": {
+        "type": "user",
+        "user": "myuser",
+        "nginxConfigFile": "/home/john_appleseed/sites/myuser.example.com.cfg"
     }
 }
