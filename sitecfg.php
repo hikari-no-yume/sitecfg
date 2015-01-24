@@ -22,11 +22,14 @@ function setupSite($site, $siteName) {
         $siteDir = "/home/$site[user]/htdocs";
         run("useradd $site[user] --create-home") or die("failed to create user account \"$site[user]\"\n");
         mkdir($siteDir) or die("failed to create htdocs directory\n");
+    } else if ($site['type'] === 'dir') {
+        $siteDir = "$config[sitesDir]/$siteName";
+        mkdir($siteDir) or die("failed to create htdocs directory\n");
     } else {
         die("unknown site type $site[type]\n");
     }
 
-    $owner = ($site['type'] === 'git') ? $config['owner'] : $site['user'];
+    $owner = ($site['type'] !== 'user') ? $config['owner'] : $site['user'];
     run("chown -R $owner:$config[group] '$siteDir'") or die("failed to change owner and group of directory\n");
         
     if (!file_exists("/var/www")) {

@@ -15,10 +15,13 @@ There are two configuration files. The first is `config.json` (copy `config.exam
 
 The second is `sites.json` (copy `sites.example.json` to get started), which contains a key for each site. Each site's object contains these keys:
 
-* `"type"` - Either `"git"` if we're using a git repo for our site, or `"user"` if we want to create a user account and an empty htdocs directory in its home directory (so someone can SSH in and upload site content)
+* `"type"` - Can be:
+    * `"git"` if we're using a git repo for our site
+    * `"user"` if we want to create a user account and an empty htdocs directory in its home directory (so someone can SSH in and upload site content)
+    * `"dir"` if we want an empty directory
 * `"gitRepo"` - (`"git"` sites only) The URL of a git repository which will be cloned (from GitHub, for example)
 * `"user"` - (`"user"` sites only) The username to give the user account
-* `"nginxConfigFile"` - The path of the nginx configuration file (which should use `/var/www/site_name` for its webroot) - for `"git"` sites this is relative to the repository e.g. `example.com.cfg`, and for `"user"` sites this is absolute, e.g. `/home/john_appleseed/sites/example.com.cfg`
-* `"webroot"` - (`"git"` sites only - `"user"` sites always create an htdocs directory) The path within that git repository of the webroot, e.g. `htdocs` (`/var/www/site_name` will be symlinked to point to this)
+* `"nginxConfigFile"` - The path of the nginx configuration file (which should use `/var/www/site_name` for its webroot) - for `"git"` sites this is relative to the repository e.g. `example.com.cfg`, and for `"user"` and `"dir"` sites this is absolute, e.g. `/home/john_appleseed/sites/example.com.cfg`
+* `"webroot"` - (`"git"` sites only - `"user"` and `"dir"` sites always create an htdocs directory) The path within that git repository of the webroot, e.g. `htdocs` (`/var/www/site_name` will be symlinked to point to this)
 
 That's it! 
