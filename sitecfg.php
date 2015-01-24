@@ -23,8 +23,9 @@ function setupSite($site, $siteName) {
         run("useradd $site[user] --create-home") or die("failed to create user account \"$site[user]\"\n");
         mkdir($siteDir) or die("failed to create htdocs directory\n");
     } else if ($site['type'] === 'dir') {
-        $siteDir = "$config[sitesDir]/$siteName/htdocs";
-        mkdir($siteDir, 077, true) or die("failed to create htdocs directory\n");
+        $siteDir = "$config[sitesDir]/$siteName";
+        mkdir($siteDir) or die("failed to create site directory\n");
+        mkdir("$siteDir/htdocs") or die("failed to create htdocs directory\n");
     } else {
         die("unknown site type $site[type]\n");
     }
@@ -38,7 +39,13 @@ function setupSite($site, $siteName) {
     }
     
     $wwwDir = "/var/www/$siteName";
-    $webRoot = ($site['type'] === 'git') ? "$siteDir/$site[webRoot]" : $siteDir;
+    if ($site['type'] === 'git') {
+        $webRoot = "$siteDir/$site[webRoot]";
+    } else if ($site['type'] === 'user') {
+        $webRoot = $siteDir;
+    } else if ($site['type'] === 'dir') {
+        $webRoot = "$siteDir/htdocs";
+    }
 
     run("ln -s '$webRoot' '$wwwDir'") or die ("failed to symlink webroot into /var/www");
     
