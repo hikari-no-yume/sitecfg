@@ -10,7 +10,7 @@ Configuration
 
 There are two configuration files. The first is `config.json` (copy `config.example.json` to get started), which contains these keys:
 
-* `"owner"` and `"group"` - The username (probably your username) and group name (most likely `www-data` or `nginx`) that the git repository will be `chmod`ed to be owned by (`"owner"` isused only for `"git"` sites, `"user"` sites are chowned to their user)
+* `"owner"` and `"group"` - The username (probably your username) and group name (most likely `www-data` or `nginx`) that the git repository will be `chmod`ed to be owned by (`"owner"` is not used for `"user"` sites, which are chowned to their user)
 * `"sitesDir"` - The directory that the git repositories will be put in, e.g. `/home/your_username/sites`
 
 The second is `sites.json` (copy `sites.example.json` to get started), which contains a key for each site. Each site's object contains these keys:
